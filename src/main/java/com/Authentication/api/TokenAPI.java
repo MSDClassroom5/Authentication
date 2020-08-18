@@ -34,20 +34,27 @@ public class TokenAPI {
 //			userJsonObject.put("password", password);
 
 			// build the url with user API post method with user body (JSON)
-			String url = "http://localhost:8080/api/users";
-		//    RestTemplate restTemplate = new RestTemplate();
+			String url = "http://localhost:8080/api/verifyuser";
+			
+		    RestTemplate restTemplate = new RestTemplate();
 		    
-		//	ResponseEntity<Boolean> res = restTemplate.postForEntity(url, u, Boolean.class);
+			ResponseEntity<Boolean> res = restTemplate.postForEntity(url, u, Boolean.class);
 			
 			// if user name and password matched the customer DB then return the token
-		//	if (res.getBody()) {
+			if (res.getBody()) {
 				Token token = jwtUtil.createToken(username);
 				ResponseEntity<?> response = ResponseEntity.ok(token);
 				return response;	
-		//	}
+			}
 		}
 		// bad request
 		return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		
 	}	
+	
+//	@RequestMapping()
+//	@PostMapping("/register")
+//	public ResponseEntity<?> createTokenforCustomer(@RequestBody User u) {
+//		
+//	}	
 }
