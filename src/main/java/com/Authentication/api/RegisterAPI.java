@@ -15,37 +15,29 @@ import com.Authentication.jwthelper.JWTUtil;
 
 
 @RestController
-@RequestMapping("/token")
-public class TokenAPI {
+@RequestMapping("/register")
+public class RegisterAPI {
 	JWTUtil jwtUtil = new JWTHelper();
 	
 
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<?> createTokenforCustomer(@RequestBody User u) {
+	public ResponseEntity<?> registerforCustomer(@RequestBody User u) {
 		
 		String username = u.getName();
 		String password = u.getPassword();
+		String email = u.getEmail();
 		
 		if (username != null && username.length() > 0 
-				&& password != null && password.length() > 0 ) {
-			
-//			JSONObject userJsonObject = new JSONObject();
-//			userJsonObject.put("username", username);
-//			userJsonObject.put("password", password);
+				&& password != null && password.length() > 0 && email != null && email.length() > 0) {			
 
 			// build the url with user API post method with user body (JSON)
-			String url = "http://localhost:8080/api/verifyuser";
+			String url = "http://localhost:8080/api/customers";
 			
 		    RestTemplate restTemplate = new RestTemplate();
 		    
 			ResponseEntity<Boolean> res = restTemplate.postForEntity(url, u, Boolean.class);
 			
-			// if user name and password matched the customer DB then return the token
-			if (res.getBody()) {
-				Token token = jwtUtil.createToken(username);
-				ResponseEntity<?> response = ResponseEntity.ok(token);
-				return response;	
-			}
+			return res;	
 		}
 		// bad request
 		return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
