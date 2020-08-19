@@ -63,7 +63,7 @@ public class TokenAPI {
 		userJsonObject.put("email", user.getEmail());
 		
 	    ResponseEntity<Boolean> res = restTemplate.postForEntity(url, userJsonObject, Boolean.class);
-	    System.out.println("User status: " + res.getBody());
+	    System.out.println("Response Body: " + res.getBody());
 		return res;
 	}	
 }
