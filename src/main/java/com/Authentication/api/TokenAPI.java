@@ -53,7 +53,7 @@ public class TokenAPI {
 	@RequestMapping()
 	@PostMapping("/register")
 	public ResponseEntity<Boolean> registerCustomer(@RequestBody User user) {
-		String url = "http://localhost:8080/api/register-user";
+		String url = "http://localhost:8080/api/customers/register-user";
 		
 	    RestTemplate restTemplate = new RestTemplate();
 
