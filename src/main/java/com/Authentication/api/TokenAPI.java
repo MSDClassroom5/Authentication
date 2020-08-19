@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,12 +14,11 @@ import com.Authentication.jwthelper.JWTUtil;
 
 
 @RestController
-@RequestMapping("/token")
 public class TokenAPI {
 	JWTUtil jwtUtil = new JWTHelper();
 	
 
-	@PostMapping(consumes = "application/json")
+	@PostMapping("token")
 	public ResponseEntity<?> createTokenforCustomer(@RequestBody User u) {
 		
 		String username = u.getUsername();
@@ -52,9 +50,20 @@ public class TokenAPI {
 		
 	}	
 	
-//	@RequestMapping()
-//	@PostMapping("/register")
-//	public ResponseEntity<?> createTokenforCustomer(@RequestBody User u) {
-//		
-//	}	
+	@RequestMapping()
+	@PostMapping("/register")
+	public ResponseEntity<Boolean> registerCustomer(@RequestBody User user) {
+		String url = "http://localhost:8080/api/register-user";
+		
+	    RestTemplate restTemplate = new RestTemplate();
+
+		JSONObject userJsonObject = new JSONObject();
+		userJsonObject.put("userName", user.getUsername());
+		userJsonObject.put("password", user.getPassword());
+		userJsonObject.put("email", user.getEmail());
+		
+	    ResponseEntity<Boolean> res = restTemplate.postForEntity(url, userJsonObject, Boolean.class);
+	    System.out.println("User status: " + res.getBody());
+		return res;
+	}	
 }
