@@ -1,7 +1,11 @@
 package com.Authentication.api;
 
 import org.json.simple.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +39,16 @@ public class RegisterAPI {
 			
 		    RestTemplate restTemplate = new RestTemplate();
 		    
-			ResponseEntity<Boolean> res = restTemplate.postForEntity(url, u, Boolean.class);
+		    //Add token and set up headers
+		    Token registerToken = jwtUtil.createToken("registerToken");
+		    HttpHeaders headers = new HttpHeaders();
+		    headers.setBearerAuth(registerToken.getToken());
+		    headers.setContentType(MediaType.APPLICATION_JSON);
 			
-			return res;	
+		    HttpEntity<User> entity = new HttpEntity<>(u, headers);
+		    
+			return restTemplate.postForEntity(url, entity, Boolean.class);
+			
 		}
 		// bad request
 		return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
