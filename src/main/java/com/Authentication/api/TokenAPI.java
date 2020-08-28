@@ -32,11 +32,14 @@ public class TokenAPI {
 //			userJsonObject.put("password", password);
 
 			// build the url with user API post method with user body (JSON)
-			String url = "http://localhost:8080/api/verifyuser";
+			//String url = "http://localhost:8080/api/verifyuser";
+
+			String apiHost = System.getenv("API_HOST");
+			String apiURL = "http://" + apiHost + "/api/verifyuser";
 			
 		    RestTemplate restTemplate = new RestTemplate();
 		    
-			ResponseEntity<Boolean> res = restTemplate.postForEntity(url, u, Boolean.class);
+			ResponseEntity<Boolean> res = restTemplate.postForEntity(apiURL, u, Boolean.class);
 			
 			// if user name and password matched the customer DB then return the token
 			if (res.getBody()) {

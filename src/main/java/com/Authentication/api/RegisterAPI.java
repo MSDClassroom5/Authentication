@@ -1,16 +1,13 @@
 package com.Authentication.api;
 
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,7 +32,11 @@ public class RegisterAPI {
 				&& password != null && password.length() > 0 && email != null && email.length() > 0) {			
 
 			// build the url with user API post method with user body (JSON)
-			String url = "http://localhost:8080/api/customers";
+			
+			String apiHost = System.getenv("API_HOST");
+			String apiURL = "http://" + apiHost + "/api/customers";
+			
+			//String apiURL = "http://localhost:8080/api/customers";
 			
 		    RestTemplate restTemplate = new RestTemplate();
 		    
@@ -47,7 +48,7 @@ public class RegisterAPI {
 			
 		    HttpEntity<User> entity = new HttpEntity<>(u, headers);
 		    
-			return restTemplate.postForEntity(url, entity, Boolean.class);
+			return restTemplate.postForEntity(apiURL, entity, Boolean.class);
 			
 		}
 		// bad request
