@@ -53,21 +53,4 @@ public class TokenAPI {
 		
 	}	
 	
-	@RequestMapping()
-	@PostMapping("/register")
-	public ResponseEntity<Boolean> registerCustomer(@RequestBody User user) {
-		String apiHost = System.getenv("API_HOST");
-		String url = "http://" + apiHost + "/api/customers";
-		
-	    RestTemplate restTemplate = new RestTemplate();
-
-		JSONObject userJsonObject = new JSONObject();
-		userJsonObject.put("userName", user.getName());
-		userJsonObject.put("password", user.getPassword());
-		userJsonObject.put("email", user.getEmail());
-		
-	    ResponseEntity<Boolean> res = restTemplate.postForEntity(url, user, Boolean.class);
-	    System.out.println("Response Body: " + res.getBody());
-		return res;
-	}	
 }
