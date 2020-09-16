@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AuthenticationApplication {
 
 	public static void main(String[] args) {
+		System.out.println("MSD Project group 5::Starting Auth application");
 		SpringApplication.run(AuthenticationApplication.class, args);
 	}
 

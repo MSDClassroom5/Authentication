@@ -1,11 +1,9 @@
 package com.Authentication.api;
 
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,7 +34,7 @@ public class TokenAPI {
 
 			String apiHost = System.getenv("API_HOST");
 			String apiURL = "http://" + apiHost + "/api/verifyuser";
-			
+			System.out.println("MSD Project group 5::apiHost: " + apiHost);
 		    RestTemplate restTemplate = new RestTemplate();
 		    
 			ResponseEntity<Boolean> res = restTemplate.postForEntity(apiURL, u, Boolean.class);
