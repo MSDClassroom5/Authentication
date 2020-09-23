@@ -49,12 +49,13 @@ public class RegisterAPI {
 		    HttpEntity<User> entity = new HttpEntity<>(u, headers);
 		    
 		    ResponseEntity<?> res = restTemplate.postForEntity(apiURL, entity, Boolean.class);
-		    System.out.println("Response Body: " + res.getBody());
+		    System.out.println("MSD Project group 5::Response Body: " + res.getBody());
+		    
 		    return res;
 		}
 		// bad request
 		ResponseEntity<?> res = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		System.out.println("Response Body: " + res.getBody());
+		System.out.println("MSD Project group 5::Response Body: " + res.getBody());
 		return res;
 		
 	}	
