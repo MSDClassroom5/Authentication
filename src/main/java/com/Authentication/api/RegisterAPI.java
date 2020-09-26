@@ -34,6 +34,10 @@ public class RegisterAPI {
 			// build the url with user API post method with user body (JSON)
 			
 			String apiHost = System.getenv("API_HOST");
+			if ((apiHost == null) || (apiHost.isEmpty())) {
+				apiHost = "localhost:8080";
+			}
+			
 			String apiURL = "http://" + apiHost + "/api/customers";
 			
 			//String apiURL = "http://localhost:8080/api/customers";
