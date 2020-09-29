@@ -46,6 +46,10 @@ public class TokenAPI {
 			if ((apiHost == null) || (apiHost.isEmpty())) {
 				apiHost = "localhost:8080";
 			}
+	    	span.finish();			
+	    	span = tracer.buildSpan("verify user").start();
+	    	span.setTag("http.status_code",201);
+			
 			String apiURL = "http://" + apiHost + "/api/verifyuser";
 			System.out.println("MSD Project group 5::apiHost: " + apiHost);
 		    RestTemplate restTemplate = new RestTemplate();
@@ -56,8 +60,13 @@ public class TokenAPI {
 			
 			// if user name and password matched the customer DB then return the token
 			if (res.getBody()) {
+		    	span = tracer.buildSpan("createToken").start();
+		    	span.setTag("http.status_code",201);
+				
 				Token token = jwtUtil.createToken(username);
 				ResponseEntity<?> response = ResponseEntity.ok(token);
+		    	span.finish();
+				
 				return response;	
 			}
 		}

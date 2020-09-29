@@ -1,5 +1,6 @@
 package com.Authentication.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,15 +15,24 @@ import org.springframework.web.client.RestTemplate;
 import com.Authentication.jwthelper.JWTHelper;
 import com.Authentication.jwthelper.JWTUtil;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+
 
 @RestController
 @RequestMapping("/register")
 public class RegisterAPI {
 	JWTUtil jwtUtil = new JWTHelper();
-	
+
+    @Autowired
+    private Tracer tracer;	
 
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<?> registerforCustomer(@RequestBody User u) {
+		
+		// add tracking code
+    	Span span = tracer.buildSpan("registerforCustomer").start();
+    	span.setTag("http.status_code",201);
 		
 		String username = u.getName();
 		String password = u.getPassword();
@@ -54,12 +64,16 @@ public class RegisterAPI {
 		    
 		    ResponseEntity<?> res = restTemplate.postForEntity(apiURL, entity, Boolean.class);
 		    System.out.println("MSD Project group 5::Response Body: " + res.getBody());
+
+		    span.finish();
 		    
 		    return res;
 		}
 		// bad request
 		ResponseEntity<?> res = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		System.out.println("MSD Project group 5::Response Body: " + res.getBody());
+	    span.finish();
+		
 		return res;
 		
 	}	
