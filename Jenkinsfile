@@ -22,7 +22,7 @@ node {
     }
     
     stage ("Run Docker container instance - AuthApi"){
-        sh "docker run -d --name project-auth -p 8081:8081 project-auth:v1.0"
+        sh "docker run -d --name project-auth -p 9001:9001 project-auth:v1.0"
      }
     
     stage('User Acceptance Test - AuthApi') {
