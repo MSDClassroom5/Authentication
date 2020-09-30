@@ -1,9 +1,5 @@
 node {
-
-    stage ("Checkout AuthApi"){
-        git url: '/home/osboxes/Desktop/demomccproject/prj-auth-api'
-    }
-    
+  
     stage ("Gradle Build - AuthApi") {
         sh 'gradle clean build'
     }
