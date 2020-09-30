@@ -1,5 +1,9 @@
 node {
   
+    stage ("Checkout AuthAPI"){
+        git url: '/home/osboxes/project/Authentication'
+    }
+
     stage ("Gradle Build - AuthApi") {
         sh 'gradle clean build'
     }
